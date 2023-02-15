@@ -40,7 +40,7 @@
         @apply p-2.5 focus:outline-none shadow-inner placeholder-black/75;
     }
     .footer {
-        @apply w-full h-16 bg-bluec text-white p-2.5 ;
+        @apply w-full h-16 bg-bluec text-white p-2.5 text-center text-xl fixed bottom-0;
     }
     .grp {
         @apply w-full flex flex-col justify-between space-y-3.5;

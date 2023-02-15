@@ -5,7 +5,7 @@ function Register(props) {
     return (
         <div>
             <Head>
-                <title>Login</title>
+                <title>Registration</title>
             </Head>
             <div className="container">
                 <form method="POST" id="login-form" className="form-register">

@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="text-green-600 text-2xl">Hello</div>
+        <div className="text-green-600 text-2xl text-center p-64">Hello Converter</div>
       </main>
     </>
   )

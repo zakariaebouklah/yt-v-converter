@@ -1,7 +1,7 @@
 import React from 'react';
 import {useRouter} from "next/router";
 
-function Navbar({children}) {
+function Navbar(props) {
 
     const router = useRouter();
 
@@ -24,9 +24,6 @@ function Navbar({children}) {
                         </div>
                 }
             </nav>
-            <main>
-                {children}
-            </main>
         </>
     );
 }
