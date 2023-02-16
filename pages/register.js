@@ -1,28 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Head from "next/head";
+import axios from "axios";
+import {useRouter} from "next/router";
 
 function Register(props) {
+
+    const [userData, setUserData] = useState({
+        email: "",
+        nickname: "",
+        password : ""
+    });
+
+    const router = useRouter();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            [name]: value
+        }))
+        // console.log(userData);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(JSON.stringify(userData))
+
+        axios.post("http://localhost:8000/register", JSON.stringify(userData))
+            .then(res => {
+                alert("user created successfully");
+                router.push("/login").then(r => {});
+            })
+            .catch(err => {
+                alert(err);
+            })
+
+        // console.log(userData);
+    }
+
     return (
         <div>
             <Head>
                 <title>Registration</title>
             </Head>
             <div className="container">
-                <form method="POST" id="login-form" className="form-register">
+                <form onSubmit={handleSubmit} method="POST" id="register-form" className="form-register">
 
                     <div className="grp">
-                        <label htmlFor="e-mail">E-mail</label>
-                        <input className="input" type="text" name="e-mail" required={true}/>
+                        <label htmlFor="email">E-mail</label>
+                        <input onChange={handleChange} className="input" id="e-mail" type="text" name="email" required={true}/>
                     </div>
 
                     <div className="grp">
-                        <label htmlFor="e-mail">NickName</label>
-                        <input className="input" type="text" name="e-mail" required={true}/>
+                        <label htmlFor="nickname">NickName</label>
+                        <input onChange={handleChange} className="input" id="nickname" type="text" name="nickname" required={true}/>
                     </div>
 
                     <div className="grp">
                         <label htmlFor="password">Password</label>
-                        <input className="input" type="text" name="password" required={true}/>
+                        <input onChange={handleChange} className="input" id="password" type="password" name="password" required={true}/>
                     </div>
 
                     <div className="h-24">
