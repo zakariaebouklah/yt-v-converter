@@ -16,7 +16,7 @@
         @apply bg-white text-black p-3 rounded-lg inline-block hover:bg-orangec hover:text-white effect;
     }
     .btn {
-        @apply w-24 h-12 p-3 shadow-3xl text-center rounded-md;
+        @apply w-24 h-12 p-3 shadow-3xl text-center rounded-md cursor-pointer;
     }
     .nav {
         @apply w-full h-24 bg-green-500 flex flex-row justify-between items-center px-12;
@@ -44,5 +44,11 @@
     }
     .grp {
         @apply w-full flex flex-col justify-between space-y-3.5;
+    }
+    .radios {
+        @apply flex flex-row justify-evenly border-2 border-l border-black p-2.5 rounded-md;
+    }
+    .radio {
+        @apply flex flex-row space-x-1 ;
     }
 }
