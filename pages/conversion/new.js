@@ -174,24 +174,31 @@ function New(props) {
                     </div>
 
                 </form>
-            </div>
 
-            <div>
-                {
-                    downloadLink &&
+                <div className="flex flex-row justify-center p-2 mx-24">
+                    {
+                        downloadLink &&
                         (
+                            // className={isClicked ? "hidden" : "visible"}
                             <a href={downloadLink} download={`yt-vid.${format}`} onClick={handleDownloadClick} className={isClicked ? "hidden" : "visible"} >
-                                <button>Download</button>
+                                <button
+                                    className="btn border-b-2 border-orangec hover:bg-orangec hover:text-white transition-all ease-in-out delay-75 duration-300">
+                                    Download
+                                </button>
                             </a>
                         )
-                }
-                {
-                    loader
-                    ?
-                        <p>Loading...</p>
-                    :
-                        <p></p>
-                }
+                    }
+                    {
+                        loader
+                            ?
+                            <p>
+                                <img src="/processing.png" alt="loader" className="w-16 h-16 animate-spin"/>
+                            </p>
+                            :
+                            <p></p>
+                    }
+                </div>
+
             </div>
         </div>
     );
