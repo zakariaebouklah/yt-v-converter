@@ -32,7 +32,7 @@ function Login(props) {
              */
             window.localStorage.setItem("auth-token", response.data.token);
 
-            await router.push('/dashboard');
+            router.push('/dashboard').then(() => router.reload());
         }
         catch (err) {
             console.log(err);
