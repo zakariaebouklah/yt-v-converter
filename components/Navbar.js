@@ -5,22 +5,6 @@ function Navbar(props) {
 
     const router = useRouter();
 
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    // useEffect(() => {
-    //     if(window.localStorage.getItem('auth-token') !== "")
-    //     {
-    //         setIsAuthenticated(true);
-    //     }
-    //     console.log(window.localStorage.getItem('auth-token'));
-    // }, [isAuthenticated])
-    //
-    // const handleLogout = () => {
-    //     window.localStorage.setItem('auth-token', "");
-    //     setIsAuthenticated(false)
-    //     router.push("/login").then(r => {});
-    // }
-
     return (
         <>
             <nav className="nav">

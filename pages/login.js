@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import Head from "next/head";
 import {useRouter} from "next/router";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Login(props) {
 
-    // const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -25,17 +25,29 @@ function Login(props) {
             const response = await axios.post(
                 "http://localhost:8000/api/login_check", postedData, configData
                 )
-            console.log(response.data.token);
+            console.log(response.data);
             /**
              * TODO: Choose wisely between using localstorage or using cookies to store JWT token
              * currently we're using localStorage...
              */
             window.localStorage.setItem("auth-token", response.data.token);
 
-            router.push('/dashboard').then(() => router.reload());
+            router.push('/dashboard').then(() => {
+                router.reload();
+            });
         }
         catch (err) {
-            console.log(err);
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                icon: " 😵 "
+            })
         }
 
     }

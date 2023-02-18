@@ -1,19 +1,46 @@
 import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import axios from "axios";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 function New(props) {
+
+    const router = useRouter();
 
     const [url, setUrl] = useState('');
     const [format, setFormat] = useState("mp3");
     const [jwt, setJWT] = useState('');
-    const [loader, setLoader] = useState('');
+    const [loader, setLoader] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
-    const [downloadLink, setDownloadLink] = useState(null);
+    const [downloadLink, setDownloadLink] = useState("");
 
     useEffect(() => {
          setJWT(window.localStorage.getItem('auth-token'));
     }, [])
+
+    useEffect(() => {
+        if (window.localStorage.getItem('auth-token') === "")
+        {
+            router.push("/login").then(r => {});
+            toast.error("You need to log in...", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                icon: " ⛔ "
+            })
+        }
+    }, [])
+
+    const handleDownloadClick = () => {
+        setIsClicked(true);
+    }
 
     const configData = {
         headers: {
@@ -30,7 +57,9 @@ function New(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        setLoader("Loading...")
+        setLoader(true);
+
+        e.target.reset();
 
         const postToApiEndPoint = async (endpoint) => {
             try {
@@ -51,13 +80,22 @@ function New(props) {
                 if(response.data.success)
                 {
                     setDownloadLink(response.data.link);
+                    setLoader(false);
+                    setIsClicked(false);
                 }
                 else
                 {
-                    /**
-                     * TODO: Use React Hot toasts
-                     */
-                    alert("something went wrong");
+                    toast.error("something went wrong...", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                        icon: " 🤔 "
+                    })
                 }
             }
             catch (err) {
@@ -121,17 +159,17 @@ function New(props) {
                 {
                     downloadLink &&
                         (
-                            <a href={downloadLink} download={`yt-vid.${format}`} >
+                            <a href={downloadLink} download={`yt-vid.${format}`} onClick={handleDownloadClick} className={isClicked ? "hidden" : "visible"} >
                                 <button>Download</button>
                             </a>
                         )
                 }
                 {
-                    downloadLink
+                    loader
                     ?
-                        <p>{loader}</p>
+                        <p>Loading...</p>
                     :
-                        <p> </p>
+                        <p></p>
                 }
             </div>
         </div>
