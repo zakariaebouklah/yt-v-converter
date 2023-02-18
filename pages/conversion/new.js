@@ -63,25 +63,35 @@ function New(props) {
 
         const postToApiEndPoint = async (endpoint) => {
             try {
-                console.log(url);
-                const response = await axios.post(endpoint, {url, jwt}, configData);
-                // console.log(response.data);
-                /* get the binary file as a js Blob */
-                console.log(response);
-                console.log("------------")
-                // const binData = new Blob([response.data.bin], { type: "audio/mpeg" });
-                /* create downloadLink based on binary data */
-                // const link = URL.createObjectURL(binData);
 
-                /**
-                 * TODO: if jwt is expired we need to tell the user to reconnect of redirect him to /login
-                 */
+                const response = await axios.post(endpoint, {url, jwt}, configData);
+
+                // console.log(response.data);
 
                 if(response.data.success)
                 {
                     setDownloadLink(response.data.link);
                     setLoader(false);
                     setIsClicked(false);
+                }
+                //if jwt is expired then the "data" we got in the front-end is an empty string.
+                else if (typeof response.data === "string")
+                {
+                    toast.error("Session timeout... You need to login.", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                        icon: " 🤔 "
+                    })
+                    setTimeout(() => {
+                        router.push("/login");
+                    }, 7000)
+                    window.localStorage.setItem("auth-token", "");
                 }
                 else
                 {
@@ -99,7 +109,18 @@ function New(props) {
                 }
             }
             catch (err) {
-                console.log(err)
+                // console.log(err)
+                toast.error("Something went wrong...", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    icon: " 🤔 "
+                })
             }
         };
 
