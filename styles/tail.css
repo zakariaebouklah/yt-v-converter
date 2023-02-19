@@ -6,9 +6,6 @@
     .effect {
         @apply transition-all ease-in-out duration-300 delay-75;
     }
-    .effect2 {
-        @apply transition-all ease-in-out duration-300;
-    }
     .current {
         @apply bg-orangec text-white p-3 rounded-lg inline-block;
     }
@@ -16,10 +13,10 @@
         @apply bg-white text-black p-3 rounded-lg inline-block hover:bg-orangec hover:text-white effect;
     }
     .btn {
-        @apply w-24 h-12 p-3 shadow-3xl text-center rounded-md cursor-pointer;
+        @apply w-24 h-12 p-3 shadow-3xl text-center rounded-md cursor-pointer effect;
     }
     .nav {
-        @apply w-full h-24 bg-green-500 flex flex-row justify-between items-center px-12;
+        @apply w-full h-24 bg-green-500 flex flex-row justify-between items-center px-12 shadow-3xl;
     }
     .connection {
         @apply w-1/2 flex flex-row justify-end space-x-7;
@@ -28,27 +25,39 @@
         @apply font-bold w-1/2;
     }
     .container {
-        @apply w-full p-7 flex flex-row justify-center;
+        @apply h-full flex flex-row justify-center relative top-0 bottom-0 left-0 right-0 m-auto mt-14 shadow-3xl rounded-md;
     }
     .form-login {
         @apply w-full p-24 flex flex-col space-y-5;
+    }
+    .form-conversion {
+        @apply p-12 m-10 flex flex-col space-y-5 border-4 border-[#e1ebff] rounded-xl;
     }
     .form-register {
         @apply w-full p-12 flex flex-col space-y-5;
     }
     .input {
-        @apply p-2.5 focus:outline-none shadow-inner placeholder-black/75;
+        @apply p-2.5 focus:outline-none shadow-inner bg-gray-300 placeholder-black/75 rounded-md;
     }
     .footer {
-        @apply w-full h-16 bg-bluec text-white p-2.5 text-center text-xl fixed bottom-0;
+        @apply w-full h-16 bg-gradient-to-r from-bluec to-greenc text-white p-2.5 text-center text-xl fixed bottom-0 shadow-3xl;
     }
     .grp {
         @apply w-full flex flex-col justify-between space-y-3.5;
+    }
+    .inner-grp{
+        @apply w-full flex flex-row space-x-1;
     }
     .radios {
         @apply flex flex-row justify-evenly border-2 border-l border-black p-2.5 rounded-md;
     }
     .radio {
         @apply flex flex-row space-x-1 ;
+    }
+    .icon {
+        @apply flex justify-center items-center p-2.5 -ml-12 cursor-pointer;
+    }
+    .centered{
+        @apply m-24 p-36 flex justify-center items-center;
     }
 }

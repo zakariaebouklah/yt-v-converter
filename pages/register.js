@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Head from "next/head";
 import axios from "axios";
 import {useRouter} from "next/router";
+import { RiEyeCloseLine , RiEyeFill } from "react-icons/ri";
 
 function Register(props) {
 
@@ -10,6 +11,9 @@ function Register(props) {
         nickname: "",
         password : ""
     });
+
+    const [canSee, setCanSee] = useState(false);
+    const [isText, setIsText] = useState(false);
 
     const router = useRouter();
 
@@ -39,17 +43,22 @@ function Register(props) {
         // console.log(userData);
     }
 
+    const handleReveal = () => {
+        setCanSee(!canSee);
+        setIsText(!isText);
+    }
+
     return (
         <div>
             <Head>
                 <title>Registration</title>
             </Head>
-            <div className="container">
+            <div className="container bg-green-100">
                 <form onSubmit={handleSubmit} method="POST" id="register-form" className="form-register">
 
                     <div className="grp">
                         <label htmlFor="email">E-mail</label>
-                        <input onChange={handleChange} className="input" id="e-mail" type="text" name="email" required={true}/>
+                        <input onChange={handleChange} className="input" id="e-mail" type="email" name="email" required={true}/>
                     </div>
 
                     <div className="grp">
@@ -59,11 +68,21 @@ function Register(props) {
 
                     <div className="grp">
                         <label htmlFor="password">Password</label>
-                        <input onChange={handleChange} className="input" id="password" type="password" name="password" required={true}/>
+                        <div className="flex">
+                            <input onChange={handleChange} className="input grp" id="password" type={isText ? "text" : "password"} name="password" required={true}/>
+                            <div className="icon" onClick={handleReveal}>
+                                {
+                                    canSee ?
+                                        <RiEyeFill title="Hide"/>
+                                        :
+                                        <RiEyeCloseLine title="Reveal"/>
+                                }
+                            </div>
+                        </div>
                     </div>
 
                     <div className="h-24">
-                        <input type="submit" value="Sign Up" className="btn mt-9"/>
+                        <input type="submit" value="Sign Up" className="btn mt-9 border-b-2 border-bluec hover:bg-bluec hover:text-white"/>
                     </div>
 
                 </form>

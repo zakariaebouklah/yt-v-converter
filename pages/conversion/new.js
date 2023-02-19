@@ -13,6 +13,7 @@ function New(props) {
     const [jwt, setJWT] = useState('');
     const [loader, setLoader] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     const [downloadLink, setDownloadLink] = useState("");
 
@@ -40,6 +41,7 @@ function New(props) {
 
     const handleDownloadClick = () => {
         setIsClicked(true);
+        setDisabled(false);
     }
 
     const configData = {
@@ -57,6 +59,7 @@ function New(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setDisabled(true);
         setLoader(true);
 
         e.target.reset();
@@ -66,7 +69,7 @@ function New(props) {
 
                 const response = await axios.post(endpoint, {url, jwt}, configData);
 
-                // console.log(response.data);
+                console.log(response.data);
 
                 if(response.data.success)
                 {
@@ -74,7 +77,7 @@ function New(props) {
                     setLoader(false);
                     setIsClicked(false);
                 }
-                //if jwt is expired then the "data" we got in the front-end is an empty string.
+                //if jwt is expired or "yt-url" is invalid ; then the "data" we got in the front-end is an empty string.
                 else if (typeof response.data === "string")
                 {
                     toast.error("Session timeout... You need to login.", {
@@ -89,7 +92,7 @@ function New(props) {
                         icon: " 🤔 "
                     })
                     setTimeout(() => {
-                        router.push("/login");
+                        router.push("/login").then(() => router.reload());
                     }, 7000)
                     window.localStorage.setItem("auth-token", "");
                 }
@@ -145,7 +148,7 @@ function New(props) {
                 <title>New Conversion</title>
             </Head>
             <div>
-                <form method="POST" className="form-login" id="conversion-form" onSubmit={handleSubmit}>
+                <form method="POST" className="form-conversion" id="conversion-form" onSubmit={handleSubmit}>
 
                     <div className="grp">
                         <label htmlFor="url">Youtube Url</label>
@@ -170,19 +173,19 @@ function New(props) {
                     </div>
 
                     <div className="h-24">
-                        <input type="submit" value="Convert" className="btn mt-7"/>
+                        <input type="submit" disabled={disabled} value="Convert" className="btn mt-7 border-b-2 border-bluec hover:border-b-4"/>
                     </div>
 
                 </form>
 
-                <div className="flex flex-row justify-center p-2 mx-24">
+                <div className="flex flex-row justify-center mx-24">
                     {
                         downloadLink &&
                         (
                             // className={isClicked ? "hidden" : "visible"}
                             <a href={downloadLink} download={`yt-vid.${format}`} onClick={handleDownloadClick} className={isClicked ? "hidden" : "visible"} >
                                 <button
-                                    className="btn border-b-2 border-orangec hover:bg-orangec hover:text-white transition-all ease-in-out delay-75 duration-300">
+                                    className="btn border-b-2 border-orangec hover:bg-orangec hover:text-white">
                                     Download
                                 </button>
                             </a>

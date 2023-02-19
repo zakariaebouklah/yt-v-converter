@@ -30,8 +30,12 @@ function Dashboard(props) {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <div>
-                This is home
+            <div className="centered">
+                <a href="/conversion/new">
+                    <button className="btn w-52 bg-blue-200 border-b-2 border-bluec hover:bg-bluec hover:text-white">
+                        Start new conversion
+                    </button>
+                </a>
             </div>
         </div>
 
